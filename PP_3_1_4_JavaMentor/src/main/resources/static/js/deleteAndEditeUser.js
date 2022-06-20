@@ -4,16 +4,16 @@ const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'))
 const editForm = document.querySelector('#editForm')
 const deleteForm = document.querySelector('#deleteForm')
 
-const userId = document.getElementById('userId')
-const userFirstName = document.getElementById('userFirstName')
-const userLastName = document.getElementById('userLastName')
-const userEmail = document.getElementById('userEmail')
-const userPassword = document.getElementById('userPassword')
+const userId = document.getElementById('idEdite')
+const userName = document.getElementById('nameEdite')
+const userSurname = document.getElementById('surnameEdite')
+const userUsername = document.getElementById('usernameEdite')
+const userPassword = document.getElementById('passwordEdite')
 
-const userIdDelete = document.getElementById('userIdDelete')
-const userFirstNameDelete = document.getElementById('userFirstNameDelete')
-const userLastNameDelete = document.getElementById('userLastNameDelete')
-const userEmailDelete = document.getElementById('userEmailDelete')
+const userIdDelete = document.getElementById('idDelete')
+const userNameDelete = document.getElementById('nameDelete')
+const userSurnameDelete = document.getElementById('surnameDelete')
+const userUsernameDelete = document.getElementById('usernameDelete')
 
 const on = (element, event, selector, handler) => {
     element.addEventListener(event, e => {
@@ -26,15 +26,15 @@ const on = (element, event, selector, handler) => {
 on(document, "click", ".btn-info", e => {
 
     const data = e.target.parentNode.parentNode
-    const idForm = data.firstElementChild.innerHTML
-    const firstNameForm = data.children[1].innerHTML
-    const lastNameForm = data.children[2].innerHTML
-    const emailForm = data.children[3].innerHTML
+    const idFormEdite = data.firstElementChild.innerHTML
+    const nameFormEdite = data.children[1].innerHTML
+    const surnameFormEdite = data.children[2].innerHTML
+    const usernameFormEdite = data.children[3].innerHTML
     const passwordForm = data.children[4].innerHTML
-    userId.value = idForm
-    userFirstName.value = firstNameForm
-    userLastName.value = lastNameForm
-    userEmail.value = emailForm
+    userId.value = idFormEdite
+    userName.value = nameFormEdite
+    userSurname.value = surnameFormEdite
+    userUsername.value = usernameFormEdite
     userPassword.value = passwordForm;
     editModal.show()
 })
@@ -49,9 +49,9 @@ editForm.addEventListener('submit', (e) => {
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 id: userId.value,
-                name: userFirstName.value,
-                surname: userLastName.value,
-                username: userEmail.value,
+                name: userName.value,
+                surname: userSurname.value,
+                username: userUsername.value,
                 password: userPassword.value,
                 roles: role
             })
@@ -64,13 +64,13 @@ on(document, "click", ".btn-danger", e => {
 
     const data = e.target.parentNode.parentNode
     const idForm = data.firstElementChild.innerHTML
-    const firstNameForm = data.children[1].innerHTML
-    const lastNameForm = data.children[2].innerHTML
-    const emailForm = data.children[3].innerHTML
+    const nameForm = data.children[1].innerHTML
+    const surnameForm = data.children[2].innerHTML
+    const usernameForm = data.children[3].innerHTML
     userIdDelete.value = idForm
-    userFirstNameDelete.value = firstNameForm
-    userLastNameDelete.value = lastNameForm
-    userEmailDelete.value = emailForm
+    userNameDelete.value = nameForm
+    userSurnameDelete.value = surnameForm
+    userUsernameDelete.value = usernameForm
     deleteModal.show()
 })
 
@@ -88,4 +88,3 @@ deleteForm.addEventListener('submit', (e) => {
         document.location.reload();
     }
 )
-
