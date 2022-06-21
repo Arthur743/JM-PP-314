@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.service.*;
@@ -22,48 +24,63 @@ public class AdminRESTController {
     }
 
     @GetMapping("/users")
-    public List<User> getUsers() {
-        return userService.getUsers();
+    public ResponseEntity<List<User>> getUsers() {
+        return new ResponseEntity<>(
+                userService.getUsers(),
+                HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Integer id) {
-        return userService.getUser(id);
+    public ResponseEntity<User> getUser(@PathVariable Integer id) {
+        return new ResponseEntity<>(
+                userService.getUser(id),
+                HttpStatus.OK);
     }
 
     @GetMapping("/roles/all")
-    public List<Role> getRoles() {
-        return roleService.getRoles();
+    public ResponseEntity<List<Role>> getRoles() {
+        return new ResponseEntity<>(
+                roleService.getRoles(),
+                HttpStatus.OK);
     }
 
     @GetMapping("/roles/{id}")
-    public Role getRole(@PathVariable Integer id) {
-        return roleService.getSpecificRoles(id);
+    public ResponseEntity<Role> getRole(@PathVariable Integer id) {
+        return new ResponseEntity<>(
+                roleService.getSpecificRoles(id),
+                HttpStatus.OK);
     }
 
     @GetMapping("/users/me")
-    public User getActiveUser(Principal principal) {
-        return userService.getSpecificUser(principal.getName());
+    public ResponseEntity<User> getActiveUser(Principal principal) {
+        return new ResponseEntity<>(
+                userService.getSpecificUser(principal.getName()),
+                HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<User> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/users")
-    public void setUser(@RequestBody User user) {
+    public ResponseEntity<User> setUser(@RequestBody User user) {
         userService.setUser(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping("/users")
-    public void updateUser(@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
         userService.updateUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/roles/ofUser/{id}")
-    public String getRolesOfUser(@PathVariable Integer id) {
-        return userService.getUser(id).toStringRoles();
+    public ResponseEntity<String> getRolesOfUser(@PathVariable Integer id) {
+        return new ResponseEntity<>(
+                userService.getUser(id).toStringRoles(),
+                HttpStatus.OK);
     }
 
 }

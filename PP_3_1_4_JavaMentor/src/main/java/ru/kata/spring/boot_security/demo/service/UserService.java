@@ -21,5 +21,4 @@ public interface UserService {
 
     User getSpecificUser(String username);
 
-    void testSetUser(User user);
 }
