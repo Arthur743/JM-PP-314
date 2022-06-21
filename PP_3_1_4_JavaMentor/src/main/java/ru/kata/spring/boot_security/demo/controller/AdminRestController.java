@@ -12,7 +12,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api")
-public class AdminRESTController {
+public class AdminRestController {
 
     private final UserService userService;
     private final RoleService roleService;
