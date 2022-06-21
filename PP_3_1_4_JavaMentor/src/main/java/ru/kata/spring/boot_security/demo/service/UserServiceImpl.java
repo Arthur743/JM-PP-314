@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.*;
@@ -20,9 +21,12 @@ public class UserServiceImpl implements UserService {
 
     private final RoleService roleService;
 
-    public UserServiceImpl(UserDao userDao, RoleService roleService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserDao userDao, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(User user) {
-        user.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.updateUser(user);
     }
 
@@ -53,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void setUser(User user) {
-        user.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.setUser(user);
     }
 
@@ -67,11 +71,5 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User getSpecificUser(String username) throws UsernameNotFoundException {
         return userDao.getSpecificUsernameOfUser(username);
-    }
-
-    @Transactional
-    public void testSetUser(User user) {
-        user.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
-        userDao.setUser(user);
     }
 }
