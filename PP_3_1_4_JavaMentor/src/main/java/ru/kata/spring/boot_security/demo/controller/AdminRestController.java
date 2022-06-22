@@ -10,13 +10,13 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api")
-public class AdminRESTController {
+public class AdminRestController {
 
     private final UserService userService;
     private final RoleService roleService;
 
     @Autowired
-    public AdminRESTController(UserService userService, RoleService roleService) {
+    public AdminRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
